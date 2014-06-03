@@ -1,0 +1,13 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+
+<polymer-element name="videolog-embed">
+    <template>
+        <p>Hello World!</p>
+    </template>
+    <script>
+        function callback(response) {
+            console.log(response);
+        }
+    </script>
+    <script src="http://api.videolog.tv/video/1014941.jsonp"></script>
+</polymer-element>

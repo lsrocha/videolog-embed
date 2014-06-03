@@ -1,0 +1,24 @@
+{
+  "name": "videolog-embed",
+  "version": "0.1.0",
+  "homepage": "https://github.com/lsrocha/videolog-webcomponent",
+  "authors": [
+    "Leonardo Rocha <leonardo.lsrocha@gmail.com>"
+  ],
+  "keywords": [
+    "embed",
+    "video",
+    "web-components"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.1"
+  }
+}

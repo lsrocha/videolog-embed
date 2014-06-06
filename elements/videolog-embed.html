@@ -7,10 +7,21 @@
     <script>
         Polymer('videolog-embed', {
             height: 281.25,
+            preload: false,
             vid: '1014941',
             url: null,
             width: 500,
             ready: function () {
+                this.parseURL();
+                var video = document.createElement('video');
+
+                if (video.canPlayType('video/mp4')) {
+                    this.embedVideo(video);
+                } else {
+                    this.embedIframe();
+                }
+            },
+            parseURL: function () {
                 if (this.url) {
                     var regex = /http(s)?:\/\/videolog.(tv|com\.br)\/(\d+)/i,
                         matches = regex.exec(this.url);
@@ -19,40 +30,38 @@
                         this.vid = matches[3];
                     }
                 }
+            },
+            embedIframe: function () {
+                var iframe = document.createElement('iframe'),
+                    endpoint = 'http://embed.videolog.tv/v/index.php';
 
-                var video = document.createElement('video');
+                iframe.src = endpoint + '?id_video=' + this.vid;
+                iframe.width = this.width;
+                iframe.height = this.height;
+                iframe.setAttribute('scrolling', 'no');
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('webkitAllowFullScreen', true);
+                iframe.setAttribute('mozallowfullscreen', true);
+                iframe.setAttribute('allowFullScreen', true);
+                this.$.video.appendChild(iframe);
+            },
+            embedVideo: function (video) {
+                var script = document.createElement('script'),
+                    endpoint = 'http://api.videolog.tv/video/';
 
-                if (video.canPlayType('video/mp4')) {
-                    var script = document.createElement('script'),
-                        endpoint = 'http://api.videolog.tv/video/';
+                script.src = endpoint + this.vid + '.jsonp';
+                this.$.video.parentNode.appendChild(script);
 
-                    script.src = endpoint + this.vid + '.jsonp';
-                    this.$.video.parentNode.appendChild(script);
-
-                    var self = this;
-                    window.callback = (function (json) {
-                        video.controls = true;
-                        video.height = self.height;
-                        video.poster = json.video.thumb;
-                        video.preload = 'none';
-                        video.src = json.video.url_mp4;
-                        video.width = self.width;
-                        self.$.video.appendChild(video);
-                    });
-                } else {
-                    var iframe = document.createElement('iframe'),
-                        endpoint = 'http://embed.videolog.tv/v/index.php';
-
-                    iframe.src = endpoint + '?id_video=' + this.vid;
-                    iframe.width = this.width;
-                    iframe.height = this.height;
-                    iframe.setAttribute('scrolling', 'no');
-                    iframe.setAttribute('frameborder', '0');
-                    iframe.setAttribute('webkitAllowFullScreen', true);
-                    iframe.setAttribute('mozallowfullscreen', true);
-                    iframe.setAttribute('allowFullScreen', true);
-                    this.$.video.appendChild(iframe);
-                }
+                var self = this;
+                window.callback = (function (json) {
+                    video.controls = true;
+                    video.height = self.height;
+                    video.poster = json.video.thumb;
+                    video.preload = 'none';
+                    video.src = json.video.url_mp4;
+                    video.width = self.width;
+                    self.$.video.appendChild(video);
+                });
             }
         });
     </script>

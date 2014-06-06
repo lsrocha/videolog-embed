@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html" />
 
-<polymer-element name="videolog-embed" attributes="vid width height">
+<polymer-element name="videolog-embed" attributes="url vid width height preload">
     <template>
         <div id="video"></div>
     </template>
@@ -8,8 +8,18 @@
         Polymer('videolog-embed', {
             height: 281.25,
             vid: '1014941',
+            url: null,
             width: 500,
             ready: function () {
+                if (this.url) {
+                    var regex = /http(s)?:\/\/videolog.(tv|com\.br)\/(\d+)/i,
+                        matches = regex.exec(this.url);
+
+                    if (matches !== null) {
+                        this.vid = matches[3];
+                    }
+                }
+
                 var video = document.createElement('video');
 
                 if (video.canPlayType('video/mp4')) {

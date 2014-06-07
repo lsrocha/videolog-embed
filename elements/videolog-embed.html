@@ -8,7 +8,7 @@
         Polymer('videolog-embed', {
             height: 281.25,
             preload: false,
-            vid: '1014941',
+            vid: '671092',
             url: null,
             width: 500,
             ready: function () {
@@ -54,13 +54,20 @@
 
                 var self = this;
                 window.callback = (function (json) {
-                    video.controls = true;
-                    video.height = self.height;
-                    video.poster = json.video.thumb;
-                    video.preload = 'none';
-                    video.src = json.video.url_mp4;
-                    video.width = self.width;
-                    self.$.video.appendChild(video);
+                    if ('video' in json) {
+                        if (self.preload) {
+                            video.preload = 'auto';
+                        } else {
+                            video.preload = 'none';
+                        }
+
+                        video.controls = true;
+                        video.height = self.height;
+                        video.poster = json.video.thumb;
+                        video.src = json.video.url_mp4;
+                        video.width = self.width;
+                        self.$.video.appendChild(video);
+                    }
                 });
             }
         });

@@ -17,7 +17,7 @@ $ bower install videolog-embed --save
     <script src="bower_components/platform/platform.js"></script>
     ```
 
-2. Importe o Videolog-embed:
+2. Importe o Videolog-embed no `<head>`:
 
     ```html
     <link rel="import" href="bower_components/videolog-embed/elements/videolog-embed.html" />
@@ -31,12 +31,12 @@ $ bower install videolog-embed --save
 
 ## Opções ##
 
-| Parâmetro | Tipo | Valor padrão | Descrição |
-| --------- | ---- | ------------ | --------- |
-| url | string | null | URL do vídeo |  
+| Parâmetro | Tipo | Padrão | Descrição |
+| --------- | ---- | ------ | --------- |
+| url | string | null | URL do vídeo |
 | vid | string | 671092 | ID do vídeo (pode ser substituído pela URL) |
-| width | float | 500 | Largura (em pixels) do player |
-| height | float | 281.25 | Altura (em pixels) do player |
+| width | float | 500 | Largura do player (em pixels) |
+| height | float | 281.25 | Altura do player (em pixels) |
 | preload | boolean | false | Define se o vídeo deve ser pré-carregado logo que a página for exibida |
 
 ## Licença ##
